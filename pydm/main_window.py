@@ -37,7 +37,21 @@ class PyDMMainWindow(QMainWindow):
       else:
         #This assumes some non-OS X unix.  No windows support right now.
         self.designer_path = path.join(qt_path, 'bin/designer')
-    
+
+    self.hidePyDMControls()
+
+  def hidePyDMControls(self):
+    self.menuBar().setVisible(False)
+    self.statusBar().setVisible(False)
+    self.ui.line.setVisible(False)
+    # Hide central widgets
+    hlayout = self.ui.horizontalLayout
+    for i in reversed(range(hlayout.count())):
+      try:
+        widgetToHide = hlayout.itemAt(i).widget()
+        widgetToHide.setVisible(False)
+      except: pass
+
   def set_display_widget(self, new_widget):
     if new_widget == self._display_widget:
       return
